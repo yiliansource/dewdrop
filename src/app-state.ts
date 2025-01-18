@@ -8,104 +8,70 @@ const uid = new ShortUniqueId({ length: 10 });
  * Holds the overall state of the application.
  */
 interface AppState {
-    /**
-     * The user's task lists.
-     */
+    tasks: Task[];
     lists: TaskList[];
 }
 
-/**
- * Represents a single task in a list.
- */
 interface Task {
-    /**
-     * The unique ID of the task.
-     */
     id: string;
-    /**
-     * Is the task completed?
-     */
     completed: boolean;
-    /**
-     * The short description that is associated with the task.
-     */
     description: string;
-    /**
-     * When the task needs to be completed by.
-     */
     deadline?: Date;
 }
 
-/**
- * Represents a list of tasks.
- */
 interface TaskList {
-    /**
-     * The unique ID of the list.
-     */
     id: string;
-    /**
-     * The name of the task list.
-     */
     name: string;
-    /**
-     * The accent color of the list.
-     */
-    color: string;
-    /**
-     * The tasks in the list.
-     */
-    tasks: Task[];
+    tasks: string[];
 }
 
+const sampleUids = Array.from(Array(5), () => uid.rnd());
+
 export const useAppStore = create<AppState>((set) => ({
+    tasks: [
+        {
+            id: sampleUids[0],
+            completed: true,
+            description: "Distribution Theory Exercises",
+            deadline: new Date(2025, 0, 11),
+        },
+        {
+            id: sampleUids[1],
+            completed: false,
+            description: "Distribution Theory Exercises",
+            deadline: new Date(2025, 0, 17),
+        },
+        {
+            id: sampleUids[2],
+            completed: false,
+            description: "Functional Analysis II Excerises",
+            deadline: new Date(2025, 0, 20),
+        },
+        {
+            id: sampleUids[3],
+            completed: true,
+            description: "Drink Water",
+            deadline: new Date(2025, 0, 11),
+        },
+    ],
     lists: [
         {
             id: uid.rnd(),
-            color: "aa0000",
             name: "University",
-            tasks: [
-                {
-                    id: uid.rnd(),
-                    completed: true,
-                    description: "Distribution Theory Exercises",
-                    deadline: new Date(2025, 0, 11),
-                },
-                {
-                    id: uid.rnd(),
-                    completed: false,
-                    description: "Distribution Theory Exercises",
-                    deadline: new Date(2025, 0, 17),
-                },
-                {
-                    id: uid.rnd(),
-                    completed: false,
-                    description: "Functional Analysis II Excerises",
-                    deadline: new Date(2025, 0, 20),
-                },
-            ],
+            tasks: sampleUids.slice(0, 3),
         },
         {
             id: uid.rnd(),
-            color: "00aa00",
             name: "Private",
-            tasks: [
-                {
-                    id: uid.rnd(),
-                    completed: true,
-                    description: "Drink Water",
-                    deadline: new Date(2025, 0, 11),
-                },
-            ],
+            tasks: [sampleUids[3]],
         },
     ],
 
-    createTaskList: (name: string, color = "000000") =>
+    createTaskList: (name: string) =>
         set(
             produce<AppState>((state) => {
                 state.lists.push({
                     id: uid.rnd(),
-                    color,
                     name,
                     tasks: [],
                 });
@@ -127,36 +93,36 @@ export const useAppStore = create<AppState>((set) => ({
                 const list = state.lists.find((l) => l.id === listId);
                 if (!list) return;
 
-                list.tasks.push({
+                const task: Task = {
                     id: uid.rnd(),
                     completed: false,
                     description,
                     deadline,
-                });
+                };
+
+                state.tasks.push(task);
+                list.tasks.push(task.id);
             }),
         ),
-    updateTask: (listId: string, taskId: string, delta: Partial<Omit<Task, "id">>) =>
+    updateTask: (taskId: string, delta: Partial<Omit<Task, "id">>) =>
         set(
             produce<AppState>((state) => {
-                const list = state.lists.find((l) => l.id === listId);
-                if (!list) return;
-
-                const task = list.tasks.find((t) => t.id === taskId);
+                const task = state.tasks.find((t) => t.id === taskId);
                 if (!task) return;
 
                 Object.assign(task, delta);
             }),
         ),
-    deleteTask: (listId: string, taskId: string) =>
-        set(
-            produce<AppState>((state) => {
-                const list = state.lists.find((l) => l.id === listId);
-                if (!list) return;
+    // deleteTask: (listId: string, taskId: string) =>
+    //     set(
+    //         produce<AppState>((state) => {
+    //             const list = state.lists.find((l) => l.id === listId);
+    //             if (!list) return;
 
-                const taskIndex = list.tasks.findIndex((t) => t.id === taskId);
-                if (taskIndex < 0) return;
+    //             const taskIndex = list.tasks.findIndex((t) => t.id === taskId);
+    //             if (taskIndex < 0) return;
 
-                list.tasks.splice(taskIndex, 1);
-            }),
-        ),
+    //             list.tasks.splice(taskIndex, 1);
+    //         }),
+    //     ),
 }));

@@ -1,64 +1,32 @@
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
+
+import { Banner } from "./banner";
+import { DewdropApp } from "./dewdrop-app";
 
 export default function App() {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 2000);
+    });
+
     return (
-        <>
-            {/* <header className="flex py-8"></header>
-            <main></main>
-            <footer></footer> */}
-
-            <main
-                className="flex flex-col w-screen h-screen"
-                style={{
-                    backgroundImage:
-                        "linear-gradient( 58.2deg,  rgba(40,91,212,0.73) -3%, rgba(171,53,163,0.45) 49.3%, rgba(255,204,112,0.37) 97.7% )",
-                }}
-            >
-                <div className="m-auto pb-12 relative select-none">
-                    <motion.svg
-                        className="absolute -right-12 -top-6 z-10 drop-shadow"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1, transition: { delay: 0.6 } }}
-                        width={130}
-                        height={130}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <mask id="text-cover">
-                            <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                            <circle cx="5.7" cy="11" r="4.2" fill="black" />
-                            <rect x="3" y="14" width="7" height="5" fill="black" />
-                        </mask>
-                        <motion.path
-                            d="M5 14C5 10.8745 7.15837 6.7764 10.9055 3.80403C11.5477 3.29457 12.4523 3.29457 13.0945 3.80403C16.8416 6.7764 19 10.8745 19 14C19 18.4183 15.4183 21 12 21C8.58172 21 5 18.4183 5 14Z"
-                            className="stroke-blue-50 stroke-[1.2]"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            mask="url(#text-cover)"
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1, transition: { delay: 0.6, duration: 1, ease: "circInOut" } }}
-                        />
-                    </motion.svg>
-
-                    <div className="relative z-20 text-white text-center drop-shadow">
-                        <motion.h1
-                            className="-mb-2 text-6xl font-bold"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0, transition: { delay: 0.4 } }}
-                        >
-                            dewdrop
-                        </motion.h1>
-                        <motion.p
-                            className="pr-3 text-xl"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0, transition: { delay: 0.6 } }}
-                        >
-                            delightful todo lists
-                        </motion.p>
+        <main
+            className="w-screen h-screen bg-fixed overflow-hidden"
+            style={{
+                backgroundImage:
+                    "linear-gradient( 58.2deg,  rgba(40,91,212,0.73) -3%, rgba(171,53,163,0.45) 49.3%, rgba(255,204,112,0.37) 97.7% )",
+            }}
+        >
+            <AnimatePresence mode="wait">
+                {isLoading && (
+                    <div key="banner" className="flex flex-col items-center justify-center w-full h-full">
+                        <Banner />
                     </div>
-                </div>
-            </main>
-        </>
+                )}
+                {!isLoading && <DewdropApp key="app" />}
+            </AnimatePresence>
+        </main>
     );
 }

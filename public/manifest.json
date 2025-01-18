@@ -1,0 +1,10 @@
+{
+    "name": "dewdrop",
+    "icons": [
+        {
+            "src": "vite.svg",
+            "type": "image/svg+xml",
+            "sizes": "any"
+        }
+    ]
+}

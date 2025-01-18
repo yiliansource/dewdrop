@@ -3,6 +3,7 @@
 @import "@fontsource/inter/900.css";
 
 @import "@fontsource/gabarito/500.css";
+@import "@fontsource/gabarito/700.css";
 
 @tailwind base;
 @tailwind components;

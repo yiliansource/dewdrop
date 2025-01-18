@@ -6,5 +6,8 @@
             "type": "image/svg+xml",
             "sizes": "any"
         }
-    ]
+    ],
+    "start_url": "/",
+    "display": "fullscreen",
+    "prefer_related_applications": false
 }

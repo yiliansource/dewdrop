@@ -4,13 +4,13 @@
     "description": "todo list application",
     "icons": [
         {
-            "src": "/app-icon.svg",
-            "type": "image/svg+xml",
+            "src": "/app-icon.png",
+            "type": "image/png",
             "sizes": "120x120"
         },
         {
-            "src": "/app-icon.svg",
-            "type": "image/svg+xml",
+            "src": "/app-icon.png",
+            "type": "image/png",
             "sizes": "180x180"
         }
     ],

@@ -2,11 +2,11 @@ import { useDrag } from "@use-gesture/react";
 import { motion, useSpring } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { useAppStore } from "./app-state";
-import { TaskList } from "./task-list";
+import { useDewdropStore } from "./app-state";
+import { TodoList } from "./todo-list";
 
 export function DewdropApp() {
-    const state = useAppStore();
+    const state = useDewdropStore();
     const [currentListIndex, setCurrentListIndex] = useState(0);
 
     const tabWidth = Math.min(window.innerWidth, 672);
@@ -65,7 +65,7 @@ export function DewdropApp() {
                             className="p-4 flex-1 w-screen max-w-2xl"
                             animate={{ opacity: listIndex === currentListIndex ? 1 : 0.5 }}
                         >
-                            <TaskList listId={list.id} />
+                            <TodoList listId={list.id} />
                         </motion.div>
                     ))}
                 </motion.div>

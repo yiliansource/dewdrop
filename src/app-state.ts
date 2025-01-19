@@ -4,34 +4,41 @@ import { create } from "zustand";
 
 const uid = new ShortUniqueId({ length: 10 });
 
+type TodoId = string;
+
 /**
  * Holds the overall state of the application.
  */
-interface AppState {
-    tasks: Task[];
-    lists: TaskList[];
+interface DewdropState {
+    todos: Todo[];
+    lists: TodoList[];
+
+    createTodoList(name: string): TodoList;
+
+    createTodo(listId: string, description: string, deadline?: Date): Todo;
+    setTodoCompleted: (todoId: TodoId, completed?: boolean) => void;
 }
 
-interface Task {
-    id: string;
+interface Todo {
+    id: TodoId;
     completed: boolean;
     description: string;
     deadline?: Date;
 }
 
-interface TaskList {
+interface TodoList {
     id: string;
     name: string;
-    tasks: string[];
+    todos: TodoId[];
 }
 
 const sampleUids = Array.from(Array(5), () => uid.rnd());
 
-export const useAppStore = create<AppState>((set) => ({
-    tasks: [
+export const useDewdropStore = create<DewdropState>((set) => ({
+    todos: [
         {
             id: sampleUids[0],
-            completed: true,
+            completed: false,
             description: "Distribution Theory Exercises",
             deadline: new Date(2025, 0, 11),
         },
@@ -49,7 +56,7 @@ export const useAppStore = create<AppState>((set) => ({
         },
         {
             id: sampleUids[3],
-            completed: true,
+            completed: false,
             description: "Drink Water",
             deadline: new Date(2025, 0, 11),
         },
@@ -58,28 +65,33 @@ export const useAppStore = create<AppState>((set) => ({
         {
             id: uid.rnd(),
             name: "University",
-            tasks: sampleUids.slice(0, 3),
+            todos: sampleUids.slice(0, 3),
         },
         {
             id: uid.rnd(),
             name: "Private",
-            tasks: [sampleUids[3]],
+            todos: [sampleUids[3]],
         },
     ],
 
-    createTaskList: (name: string) =>
+    createTodoList: (name: string): TodoList => {
+        const newList: TodoList = {
+            id: uid.rnd(),
+            name,
+            todos: [],
+        };
+
         set(
-            produce<AppState>((state) => {
-                state.lists.push({
-                    id: uid.rnd(),
-                    name,
-                    tasks: [],
-                });
+            produce<DewdropState>((state) => {
+                state.lists.push(newList);
             }),
-        ),
-    deleteTaskList: (listId: string) =>
+        );
+
+        return newList;
+    },
+    deleteTodoList: (listId: string) =>
         set(
-            produce<AppState>((state) => {
+            produce<DewdropState>((state) => {
                 const listIndex = state.lists.findIndex((l) => l.id === listId);
                 if (listIndex < 0) return;
 
@@ -87,32 +99,46 @@ export const useAppStore = create<AppState>((set) => ({
             }),
         ),
 
-    createTask: (listId: string, description: string, deadline?: Date) =>
+    createTodo: (listId: string, description: string, deadline?: Date): Todo => {
+        const newTodo: Todo = {
+            id: uid.rnd(),
+            completed: false,
+            description,
+            deadline,
+        };
+
         set(
-            produce<AppState>((state) => {
+            produce<DewdropState>((state) => {
                 const list = state.lists.find((l) => l.id === listId);
                 if (!list) return;
 
-                const task: Task = {
-                    id: uid.rnd(),
-                    completed: false,
-                    description,
-                    deadline,
-                };
-
-                state.tasks.push(task);
-                list.tasks.push(task.id);
+                state.todos.push(newTodo);
+                list.todos.push(newTodo.id);
             }),
-        ),
-    updateTask: (taskId: string, delta: Partial<Omit<Task, "id">>) =>
+        );
+
+        return newTodo;
+    },
+    setTodoCompleted: (todoId: TodoId, completed = true) => {
         set(
-            produce<AppState>((state) => {
-                const task = state.tasks.find((t) => t.id === taskId);
-                if (!task) return;
+            produce<DewdropState>((state) => {
+                const todo = state.todos.find((t) => t.id === todoId);
+                if (!todo) return;
 
-                Object.assign(task, delta);
+                todo.completed = completed;
             }),
-        ),
+        );
+    },
+
+    // updateTask: (taskId: string, delta: Partial<Omit<Todo, "id">>) =>
+    //     set(
+    //         produce<DewdropState>((state) => {
+    //             const task = state.todos.find((t) => t.id === taskId);
+    //             if (!task) return;
+
+    //             Object.assign(task, delta);
+    //         }),
+    //     ),
     // deleteTask: (listId: string, taskId: string) =>
     //     set(
     //         produce<AppState>((state) => {

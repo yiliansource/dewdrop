@@ -219,6 +219,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cyriacbr/react-split-text@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@cyriacbr/react-split-text@npm:1.0.0"
+  peerDependencies:
+    react: ">=16"
+  checksum: 10c0/99c06ffc9384dfeb60379d3fb571bec161501431870191352a261712b968ff2496b6b3517a1cb40392d3bc824dc80962df0997cd2089062b6e16f90101127f73
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.24.2":
   version: 0.24.2
   resolution: "@esbuild/aix-ppc64@npm:0.24.2"
@@ -1614,6 +1623,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dewdrop@workspace:."
   dependencies:
+    "@cyriacbr/react-split-text": "npm:^1.0.0"
     "@eslint/js": "npm:^9.17.0"
     "@fontsource/gabarito": "npm:^5.1.1"
     "@fontsource/inter": "npm:^5.1.1"

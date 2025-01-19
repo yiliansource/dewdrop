@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+&nbsp;
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center"><img src="https://github.com/yiliansource/dewdrop/blob/main/.github/banner.png" ></p>
 
-Currently, two official plugins are available:
+<div align="center">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![Static Badge](https://img.shields.io/badge/website-a191d3?style=for-the-badge)](https://dewdrop.vercel.app/) &nbsp;&nbsp;&nbsp; [![GitHub package.json version](https://img.shields.io/github/package-json/v/yiliansource/dewdrop?style=for-the-badge&color=ce9bcd)](https://github.com/yiliansource/dewdrop/blob/main/package.json) &nbsp;&nbsp;&nbsp; [![GitHub License](https://img.shields.io/github/license/yiliansource/dewdrop?style=for-the-badge&color=e0b9c7)](https://github.com/yiliansource/dewdrop/blob/main/LICENSE.md)
 
-## Expanding the ESLint configuration
+</div>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+&nbsp;
 
-- Configure the top-level `parserOptions` property like this:
+Short description - TBD!
 
-```js
-export default tseslint.config({
-    languageOptions: {
-        // other options...
-        parserOptions: {
-            project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-            tsconfigRootDir: import.meta.dirname,
-        },
-    },
-});
+## Features
+
+- TBD!
+
+## Usage
+
+The app is available at [dewdrop.vercel.app](https://dewdrop.vercel.app)!
+
+On mobile devices, the recommended way of use is to install the application as a progressive web app (PWA). In your mobile browser, open the [app](https://dewdrop.vercel.app) and then tap `Share > Add to home screen`.
+
+<!-- The app can make use of push notifications to remind the user of todos. -->
+
+## Developing
+
+After cloning the repository, run
+
+```bash
+yarn
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+to install the dependancies and then
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-    // Set the react version
-    settings: { react: { version: "18.3" } },
-    plugins: {
-        // Add the react plugin
-        react,
-    },
-    rules: {
-        // other rules...
-        // Enable its recommended rules
-        ...react.configs.recommended.rules,
-        ...react.configs["jsx-runtime"].rules,
-    },
-});
+```bash
+yarn dev
 ```
+
+to start the development server.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

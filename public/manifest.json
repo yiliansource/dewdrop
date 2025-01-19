@@ -4,15 +4,20 @@
     "description": "todo list application",
     "icons": [
         {
-            "src": "/vite.svg",
+            "src": "/app-icon.svg",
             "type": "image/svg+xml",
-            "sizes": "any"
+            "sizes": "120x120"
+        },
+        {
+            "src": "/app-icon.svg",
+            "type": "image/svg+xml",
+            "sizes": "180x180"
         }
     ],
     "id": "/?source=pwa",
     "start_url": "/?source=pwa",
-    "background_color": "#3367D6",
-    "theme_color": "#D63367",
+    "background_color": "#6985d9",
+    "theme_color": "#6985d9",
     "display": "standalone",
     "scope": "/",
     "prefer_related_applications": false

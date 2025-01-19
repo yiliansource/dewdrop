@@ -23,7 +23,7 @@ export default function App() {
                 {isLoading && (
                     <div key="banner" className="flex flex-col items-center justify-center w-full h-full">
                         <Banner />
-                        <div className="h-32 sm:h-16"></div>
+                        <div className="h-24 sm:h-16"></div>
                     </div>
                 )}
                 {!isLoading && <DewdropApp key="app" />}

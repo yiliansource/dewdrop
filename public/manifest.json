@@ -1,13 +1,19 @@
 {
-    "name": "dewdrop",
+    "short_name": "dewdrop",
+    "name": "dewdrop - delightful todo lists",
+    "description": "todo list application",
     "icons": [
         {
-            "src": "vite.svg",
+            "src": "/vite.svg",
             "type": "image/svg+xml",
             "sizes": "any"
         }
     ],
-    "start_url": "/",
-    "display": "fullscreen",
+    "id": "/?source=pwa",
+    "start_url": "/?source=pwa",
+    "background_color": "#3367D6",
+    "theme_color": "#D63367",
+    "display": "standalone",
+    "scope": "/",
     "prefer_related_applications": false
 }

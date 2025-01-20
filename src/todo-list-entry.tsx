@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { motion } from "motion/react";
 import React from "react";
 
-import { useDewdropStore } from "./app-state";
+import { useDewdropStore } from "./dewdrop-store";
 import { TodoCheckbox } from "./todo-checkbox";
 
 export function TodoListEntry({ taskId }: { taskId: string }) {

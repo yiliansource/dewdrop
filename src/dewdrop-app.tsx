@@ -2,7 +2,7 @@ import { useDrag } from "@use-gesture/react";
 import { motion, useSpring } from "motion/react";
 import { useEffect, useState } from "react";
 
-import { useDewdropStore } from "./app-state";
+import { useDewdropStore } from "./dewdrop-store";
 import { TodoList } from "./todo-list";
 
 export function DewdropApp() {

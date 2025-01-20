@@ -13,7 +13,7 @@ export function TodoCheckbox({ checked, ...props }: HTMLMotionProps<"input">) {
     return (
         <motion.div className={clsx("w-5 h-5 rounded-md transition-all bg-black/10")} {...props}>
             <input type="checkbox" id="react-option" value="" className="hidden peer" />
-            <label htmlFor="react-option" className="h-5 w-5 rounded-md">
+            <label htmlFor="react-option" className="h-5 w-5 rounded-md cursor-pointer">
                 <motion.div
                     variants={variants}
                     initial={false}

@@ -1,8 +1,7 @@
 import { AnimatePresence } from "motion/react";
 import { useShallow } from "zustand/shallow";
 
-import { useDewdropStore } from "./app-state";
-import { NewTodoListEntry } from "./new-todo-list-entry";
+import { useDewdropStore } from "./dewdrop-store";
 import { TodoListEntry } from "./todo-list-entry";
 
 export function TodoList({ listId }: { listId: string }) {
@@ -14,6 +13,9 @@ export function TodoList({ listId }: { listId: string }) {
     return (
         <div>
             <h2 className="mt-6 mb-8 text-center text-4xl drop-shadow font-bold">{list.name}</h2>
+            <div className="flex flex-row">
+                <div className="mr-0 ml-auto">+</div>
+            </div>
             <div className="flex flex-col gap-2">
                 <AnimatePresence>
                     {todosInList
@@ -26,7 +28,6 @@ export function TodoList({ listId }: { listId: string }) {
                         .map((t) => (
                             <TodoListEntry key={t.id} taskId={t.id} />
                         ))}
-                    <NewTodoListEntry key="NEW" />
                 </AnimatePresence>
             </div>
         </div>

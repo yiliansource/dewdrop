@@ -219,15 +219,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cyriacbr/react-split-text@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@cyriacbr/react-split-text@npm:1.0.0"
-  peerDependencies:
-    react: ">=16"
-  checksum: 10c0/99c06ffc9384dfeb60379d3fb571bec161501431870191352a261712b968ff2496b6b3517a1cb40392d3bc824dc80962df0997cd2089062b6e16f90101127f73
-  languageName: node
-  linkType: hard
-
 "@esbuild/aix-ppc64@npm:0.24.2":
   version: 0.24.2
   resolution: "@esbuild/aix-ppc64@npm:0.24.2"
@@ -1600,6 +1591,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: 10c0/b79ff32830e6b7faa009590af6ae0fb8c3fd9ffad46d930548fbb5acf473773b4712ae887e156ba91a7b3dc30591ce0f517d69fd83bd9c38650fdc03b4e0bac8
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4":
   version: 4.4.0
   resolution: "debug@npm:4.4.0"
@@ -1623,7 +1621,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dewdrop@workspace:."
   dependencies:
-    "@cyriacbr/react-split-text": "npm:^1.0.0"
     "@eslint/js": "npm:^9.17.0"
     "@fontsource/gabarito": "npm:^5.1.1"
     "@fontsource/inter": "npm:^5.1.1"
@@ -1635,6 +1632,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.3.4"
     autoprefixer: "npm:^10.4.20"
     clsx: "npm:^2.1.1"
+    date-fns: "npm:^4.1.0"
     eslint: "npm:^9.17.0"
     eslint-plugin-react-hooks: "npm:^5.0.0"
     eslint-plugin-react-refresh: "npm:^0.4.16"

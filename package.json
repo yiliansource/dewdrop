@@ -11,12 +11,12 @@
         "format": "prettier --write ."
     },
     "dependencies": {
-        "@cyriacbr/react-split-text": "^1.0.0",
         "@fontsource/gabarito": "^5.1.1",
         "@fontsource/inter": "^5.1.1",
         "@react-spring/web": "^9.7.5",
         "@use-gesture/react": "^10.3.1",
         "clsx": "^2.1.1",
+        "date-fns": "^4.1.0",
         "immer": "^10.1.1",
         "motion": "^11.18.1",
         "react": "^18.3.1",

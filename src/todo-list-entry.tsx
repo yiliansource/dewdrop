@@ -1,9 +1,10 @@
-import { SplitText } from "@cyriacbr/react-split-text";
 import clsx from "clsx";
+import { formatRelative } from "date-fns";
 import { motion } from "motion/react";
 import React from "react";
 
 import { useDewdropStore } from "./dewdrop-store";
+import SplitParagraph from "./split-paragraph";
 import { TodoCheckbox } from "./todo-checkbox";
 
 export function TodoListEntry({ taskId }: { taskId: string }) {
@@ -30,10 +31,33 @@ export function TodoListEntry({ taskId }: { taskId: string }) {
                 <div className="relative">
                     <TodoCheckbox checked={item.completed} onClick={handleComplete} />
                 </div>
-                <div>
-                    {/* @ts-expect-error SplitText is typed incorrectly */}
-                    <SplitText>{item.description}</SplitText>
-                    {item.deadline && <p className="text-sm text-gray-500">{item.deadline.toDateString()}</p>}
+                <div className="relative flex-1">
+                    <SplitParagraph
+                        className="mb-1 flex flex-col"
+                        lineFactory={(line, index, lineCount) => (
+                            <span key={index} className="relative mr-auto">
+                                <span>{line}</span>
+                                <motion.span
+                                    className="absolute top-3 left-0 h-0.5 bg-black"
+                                    variants={{
+                                        completed: { width: "100%", transition: { delay: index * 0.2 } },
+                                        incomplete: {
+                                            width: "0%",
+                                            transition: { delay: (lineCount - index - 1) * 0.2 },
+                                        },
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    animate={item.completed ? "completed" : "incomplete"}
+                                ></motion.span>
+                            </span>
+                        )}
+                    >
+                        {item.description}
+                    </SplitParagraph>
+
+                    {item.deadline && (
+                        <p className="text-sm text-gray-500">{formatRelative(item.deadline, new Date())}</p>
+                    )}
                 </div>
             </div>
         </motion.div>

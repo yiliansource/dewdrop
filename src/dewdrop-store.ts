@@ -56,7 +56,7 @@ export const useDewdropStore = create<DewdropState>()(
                 {
                     id: sampleUids[2],
                     completed: false,
-                    description: "Functional Analysis II Excerises",
+                    description: "Functional Analysis II Excerises - This is a longer todo line",
                     deadline: new Date(2025, 0, 20),
                 },
                 {

@@ -1,65 +1,52 @@
 import clsx from "clsx";
-import { formatRelative } from "date-fns";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { motion } from "motion/react";
-import React from "react";
+import { forwardRef, useMemo } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { HiTrash } from "react-icons/hi";
 
-import { useDewdropStore } from "./dewdrop-store";
-import SplitParagraph from "./split-paragraph";
+import { TodoData } from "./dewdrop-types";
+import { auth, db } from "./firebase/app";
+import { todoConverterForUser } from "./firebase/converter";
 import { TodoCheckbox } from "./todo-checkbox";
 
-export function TodoListEntry({ taskId }: { taskId: string }) {
-    const item = useDewdropStore((state) => state.todos.find((t) => t.id === taskId))!;
-    const setTodoCompleted = useDewdropStore((state) => state.setTodoCompleted);
+export const TodoListEntry = forwardRef<HTMLDivElement, { todo: TodoData }>(({ todo }, ref) => {
+    const user = useAuthState(auth)[0]!;
+    const todoConverter = useMemo(() => todoConverterForUser(user.uid), [user.uid]);
 
-    const handleComplete = (e: React.MouseEvent) => {
-        e.preventDefault();
-        setTodoCompleted(item.id, !item.completed);
+    const handleComplete = () => {
+        console.log("complete", todo.id);
+        updateDoc(doc(db, "todos", todo.id).withConverter(todoConverter), {
+            completed: !todo.completed,
+        });
     };
-
-    if (!item) return null;
+    const handleDelete = () => {
+        deleteDoc(doc(db, "todos", todo.id));
+    };
 
     return (
         <motion.div
             className={clsx(
-                "relative rounded-xl bg-white/50 shadow-md overflow-hidden transition-opacity",
-                item.completed && "opacity-50",
+                "flex-shrink-0 p-3 rounded-xl bg-white overflow-hidden transition-opacity",
+                todo.completed ? "opacity-50" : "",
             )}
-            exit={{ scale: 0, transition: { delay: 1.5 } }}
+            exit={{ scale: 0.8, opacity: 0 }}
             layout
+            ref={ref}
         >
-            <div className="p-3 flex flex-row gap-3">
-                <div className="relative">
-                    <TodoCheckbox checked={item.completed} onClick={handleComplete} />
+            <div className="flex flex-row gap-2 items-center">
+                <div onClick={handleComplete}>
+                    <TodoCheckbox checked={todo.completed} />
                 </div>
-                <div className="relative flex-1">
-                    <SplitParagraph
-                        className="mb-1 flex flex-col"
-                        lineFactory={(line, index, lineCount) => (
-                            <span key={index} className="relative mr-auto">
-                                <span>{line}</span>
-                                <motion.span
-                                    className="absolute top-3 left-0 h-0.5 bg-black"
-                                    variants={{
-                                        completed: { width: "100%", transition: { delay: index * 0.2 } },
-                                        incomplete: {
-                                            width: "0%",
-                                            transition: { delay: (lineCount - index - 1) * 0.2 },
-                                        },
-                                    }}
-                                    transition={{ duration: 0.2 }}
-                                    animate={item.completed ? "completed" : "incomplete"}
-                                ></motion.span>
-                            </span>
-                        )}
-                    >
-                        {item.description}
-                    </SplitParagraph>
-
-                    {item.deadline && (
-                        <p className="text-sm text-gray-500">{formatRelative(item.deadline, new Date())}</p>
-                    )}
+                <div className="flex-grow">
+                    <p>{todo.description}</p>
+                </div>
+                <div className="flex flex-row items-center">
+                    <div className="text-gray-300" onClick={handleDelete}>
+                        <HiTrash />
+                    </div>
                 </div>
             </div>
         </motion.div>
     );
-}
+});

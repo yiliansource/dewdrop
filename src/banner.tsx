@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 
 export function Banner() {
     return (
-        <div className="relative select-none drop-shadow">
+        <div className="relative select-none">
             <motion.svg
                 className="absolute -right-12 -top-6 z-10 "
                 initial={{ opacity: 0 }}
